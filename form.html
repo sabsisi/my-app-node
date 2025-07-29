@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Formulaire de Sabrina</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #ffe8f0, #e0f7fa);
+      padding: 50px;
+      text-align: center;
+    }
+    h2 {
+      color: #cc0066;
+      margin-bottom: 20px;
+    }
+
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      display: inline-block;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    input, textarea {
+      width: 250px;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background: #cc0066;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #a8004d;
+    }
+  </style>
+</head>
+<body>
+  <h2>💌 Envoie un message à Sabrina</h2>
+  <form id="monForm">
+    <input type="text" name="nom" placeholder="Ton prénom" required /><br>
+    <textarea name="message" placeholder="Ton message" rows="4" required></textarea><br>
+    <button type="submit">Envoyer</button>
+  </form>
+
+  <script>
+    document.getElementById('monForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      const res = await fetch('http://localhost:3000/api/message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.text();
+      alert(result);
+    });
+  </script>
+</body>
+</html>
